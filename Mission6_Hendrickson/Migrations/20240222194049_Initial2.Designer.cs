@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mission6_Hendrickson.Models;
 
@@ -10,9 +11,11 @@ using Mission6_Hendrickson.Models;
 namespace Mission6_Hendrickson.Migrations
 {
     [DbContext(typeof(MovieContext))]
-    partial class MovieContextModelSnapshot : ModelSnapshot
+    [Migration("20240222194049_Initial2")]
+    partial class Initial2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -30,13 +33,6 @@ namespace Mission6_Hendrickson.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            CategoryName = "Drama"
-                        });
                 });
 
             modelBuilder.Entity("Mission6_Hendrickson.Models.MovieModel", b =>
@@ -45,19 +41,21 @@ namespace Mission6_Hendrickson.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CopiedToPlex")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Edited")
+                    b.Property<string>("LentTo")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool?>("MovieEdit")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("LentTo")
+                    b.Property<string>("MovieTitle")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Notes")
@@ -65,29 +63,16 @@ namespace Mission6_Hendrickson.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Rating")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Year")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Year")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("MovieId");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Movies");
-                });
-
-            modelBuilder.Entity("Mission6_Hendrickson.Models.MovieModel", b =>
-                {
-                    b.HasOne("Mission6_Hendrickson.Models.CategoryModel", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
-
-                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

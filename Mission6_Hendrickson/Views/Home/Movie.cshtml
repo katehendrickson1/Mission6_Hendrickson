@@ -8,11 +8,18 @@
 </div>
 
 <form method="post">
-    <label asp-for="MovieCategory">Movie Category: </label>
-    <input asp-for="MovieCategory" />
+
+    <input type="hidden" asp-for="MovieId" />
+    <select asp-for="CategoryId">
+        <option value="">Movie Category: </option> 
+        @foreach (CategoryModel c in ViewBag.Categories) // for loop to access categoryid and name from view bag
+        {
+            <option value="@c.CategoryId">@c.CategoryName</option>
+        }
+    </select>
     <br />
-    <label asp-for="MovieTitle">Movie Title: </label>
-    <input asp-for="MovieTitle" />
+    <label asp-for="Title">Movie Title: </label>
+    <input asp-for="Title" />
     <br />
     <label asp-for="Year">Year Released: </label>
     <input asp-for="Year" />
@@ -28,8 +35,8 @@
         <option value="R">R</option>
     </select>
     <br />
-    <label asp-for="MovieEdit">Was the Movie Edited? </label>
-    <select asp-for="MovieEdit">
+    <label asp-for="Edited">Was the Movie Edited? </label>
+    <select asp-for="Edited">
         <option value="true">Yes</option>
         <option value="false">No</option>
     </select>
@@ -41,4 +48,7 @@
     <input asp-for="Notes" />
     <br />
     <button type="submit">Submit Movie</button>
+
+    <div asp-validation-summary="All"></div> <!-- div tag to display the errors if an invalid model is created-->
+
 </form>
